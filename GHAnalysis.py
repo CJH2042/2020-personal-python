@@ -92,14 +92,14 @@ class Run:
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.data = None
-        self.argInit()
-        print(self.analyse())
-
-    def argInit(self):
         self.parser.add_argument('-i', '--init')
         self.parser.add_argument('-u', '--user')
         self.parser.add_argument('-r', '--repo')
         self.parser.add_argument('-e', '--event')
+        print(self.analyse())
+
+    
+        
 
     def analyse(self):
         if self.parser.parse_args().init:
