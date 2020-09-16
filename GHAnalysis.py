@@ -1,7 +1,7 @@
 import json
 import os
 import argparse
-
+import time
 
 class Data:
     def __init__(self,addr:str = None,reload:int = 0):
@@ -23,16 +23,17 @@ class Data:
         self.localur = json.loads(x)
 
     def read_data(self,addr:str):
+        #解析文件夹中所有的json
         for root, dic, files in os.walk(addr):
             for f in files:
                 if f[-5:] == ".json":
                     jpath = f
                     self.analyse(addr,jpath)
-        #分三次读入数据改为一次读入，一次性读入全部数据。
+       
 
 
     def analyse(self,addr:str,jpath:str):
-        #计算三个问题数据。
+        #解析单个json
         f = open(addr+'\\'+jpath,'r', encoding = 'utf-8')
         try:
             while True:
@@ -66,6 +67,7 @@ class Data:
         finally:
             f.close()
     def savetolocal(self):
+        #初始化数据保存到本地
         with open('1.json', 'w', encoding = 'utf-8') as f:
             json.dump(self.uevent,f)
         with open('2.json', 'w', encoding = 'utf-8') as f:
@@ -97,10 +99,7 @@ class Run:
         self.parser.add_argument('-r', '--repo')
         self.parser.add_argument('-e', '--event')
         print(self.analyse())
-
-    
         
-
     def analyse(self):
         if self.parser.parse_args().init:
             self.data = Data(self.parser.parse_args().init, 1)
